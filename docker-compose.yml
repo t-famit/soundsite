@@ -1,0 +1,16 @@
+services:
+  minio:
+    image: minio/minio
+    container_name: soundsite_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: soundsite_dev
+      MINIO_ROOT_PASSWORD: soundsite_dev_secret
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+volumes:
+  minio_data:
