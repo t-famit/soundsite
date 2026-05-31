@@ -1,5 +1,4 @@
 #!/bin/bash
-#!/bin/bash
 
 SESSION="soundsite"
 
@@ -9,17 +8,16 @@ if tmux has-session -t $SESSION 2>/dev/null; then
   exit 0
 fi
 
-tmux new-session -d -s $SESSION
+tmux new-session -d -s $SESSION -n 'servers'
 
 # Window 1: servers
-tmux rename-window -t $SESSION:1 'servers'
-tmux send-keys -t $SESSION:1 'npx supabase start' Enter
-tmux split-window -h -t $SESSION:1
-tmux send-keys -t $SESSION:1 'npm run dev' Enter
+tmux send-keys -t $SESSION:0 'npm run start:services' Enter
+tmux split-window -h -t $SESSION:0
+tmux send-keys -t $SESSION:0 'npm run dev' Enter
 
 # Window 2: terminal
-tmux new-window -t $SESSION:2 -n 'terminal'
-tmux send-keys -t $SESSION:2 'cd ~/projects/soundsite' Enter
+tmux new-window -t $SESSION:1 -n 'terminal'
+tmux send-keys -t $SESSION:1 'cd ~/projects/soundsite' Enter
 
 # Attach
 tmux attach -t $SESSION
