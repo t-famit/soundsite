@@ -1,3 +1,5 @@
+import { SignInButton, UserButton, Show } from "@clerk/nextjs";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
@@ -6,7 +8,14 @@ export default function Home() {
         <div className="flex items-center gap-4 text-sm text-zinc-400">
           <a href="/explore" className="hover:text-zinc-100 transition-colors">explore</a>
           <a href="/upload" className="hover:text-zinc-100 transition-colors">upload</a>
-          <a href="/sign-in" className="hover:text-zinc-100 transition-colors">sign in</a>
+          <Show when="signedOut">
+            <SignInButton mode="modal">
+              <button className="hover:text-zinc-100 transition-colors">sign in</button>
+            </SignInButton>
+          </Show>
+          <Show when="signedIn">
+            <UserButton />
+          </Show>
         </div>
       </nav>
       <div className="flex flex-1 items-center justify-center">
@@ -17,10 +26,9 @@ export default function Home() {
           <p className="text-zinc-400 text-lg mb-8">
             upload, share, and discover music
           </p>
-          
-            <a href="/explore" className="inline-block bg-white text-zinc-950 px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">
-              start exploring
-            </a>
+          <a href="/explore" className="inline-block bg-white text-zinc-950 px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">
+            start exploring
+          </a>
         </div>
       </div>
     </main>
